@@ -14,6 +14,9 @@ const serviceRoutes = require("./routes/services");
 
 const app = express();
 
+// Trust proxy for Vercel (rate-limit için gerekli)
+app.set("trust proxy", 1);
+
 // Security middleware
 app.use(helmet());
 
@@ -42,13 +45,15 @@ app.use((req, res, next) => {
 });
 // --- CORS sonu ---
 
-// Rate limiting
+// Rate limiting (Vercel uyumlu)
 const limiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes
   max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100, // limit each IP to 100 requests per windowMs
   message: {
     error: "Too many requests from this IP, please try again later.",
   },
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 app.use(limiter);
 
@@ -116,12 +121,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Database connection (Vercel uyumlu, otomatik reconnect)
+// Database connection (Vercel uyumlu, minimal options)
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/salonbase", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/salonbase")
   .then((conn) => {
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   })
