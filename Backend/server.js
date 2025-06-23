@@ -121,9 +121,6 @@ mongoose
   .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/salonbase", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    autoReconnect: true,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 500,
   })
   .then((conn) => {
     console.log(`MongoDB Connected: ${conn.connection.host}`);
