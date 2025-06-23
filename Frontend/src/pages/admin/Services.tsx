@@ -31,7 +31,7 @@ const ServiceSchema = Yup.object().shape({
     .max(480, "Süre en fazla 480 dakika olabilir")
     .required("Süre zorunlu"),
   price: Yup.number().min(0, "Fiyat negatif olamaz").required("Fiyat zorunlu"),
-  isActive: Yup.boolean(),
+  isActive: Yup.string().oneOf(["true", "false"]),
 });
 
 const EditServiceSchema = Yup.object().shape({
@@ -59,7 +59,6 @@ const AdminServices = () => {
   const [editId, setEditId] = useState<string | null>(null);
   const [editData, setEditData] = useState<any>({});
   const [editErrors, setEditErrors] = useState<any>({});
-  const firstErrorRef = useRef<HTMLInputElement | null>(null);
   const [editGeneralError, setEditGeneralError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -154,7 +153,7 @@ const AdminServices = () => {
               ...values,
               duration: Number(values.duration),
               price: Number(values.price),
-              isActive: values.isActive === "true" || values.isActive === true,
+              isActive: values.isActive === "true",
             };
             const result = await dispatch(createService(submitValues));
             if (!result.payload) {
@@ -166,7 +165,7 @@ const AdminServices = () => {
             setSubmitting(false);
           }}
         >
-          {({ isSubmitting, errors, touched, status }) => (
+          {({ isSubmitting, status }) => (
             <Form className="modern-service-form">
               <Field
                 name="name"
@@ -395,13 +394,15 @@ const AdminServices = () => {
                           <span
                             className={
                               service.isActive === true ||
-                              service.isActive === "true"
+                              service.isActive === "true" ||
+                              service.isActive === 1
                                 ? "modern-badge-active"
                                 : "modern-badge-passive"
                             }
                           >
                             {service.isActive === true ||
-                            service.isActive === "true"
+                            service.isActive === "true" ||
+                            service.isActive === 1
                               ? "Aktif"
                               : "Pasif"}
                           </span>

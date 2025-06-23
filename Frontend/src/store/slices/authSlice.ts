@@ -131,9 +131,9 @@ const authSlice = createSlice({
         localStorage.setItem("token", action.payload.data.token);
         localStorage.setItem("user", JSON.stringify(action.payload.data.user));
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state, _action) => {
         state.loading = false;
-        state.error = action.error.message || "Login failed";
+        state.error = _action.error.message || "Login failed";
       })
       // Register
       .addCase(register.pending, (state) => {
@@ -148,9 +148,9 @@ const authSlice = createSlice({
         localStorage.setItem("token", action.payload.data.token);
         localStorage.setItem("user", JSON.stringify(action.payload.data.user));
       })
-      .addCase(register.rejected, (state, action) => {
+      .addCase(register.rejected, (state, _action) => {
         state.loading = false;
-        state.error = action.error.message || "Registration failed";
+        state.error = _action.error.message || "Registration failed";
       })
       // Get Current User
       .addCase(getCurrentUser.pending, (state) => {
@@ -163,7 +163,7 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         localStorage.setItem("user", JSON.stringify(action.payload.data.user));
       })
-      .addCase(getCurrentUser.rejected, (state, action) => {
+      .addCase(getCurrentUser.rejected, (state, _action) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.user = null;
