@@ -13,10 +13,12 @@ const initialState: ServiceState = {
   error: null,
 };
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 // Async thunks
 export const fetchServices = createAsyncThunk("services/fetchAll", async () => {
   const token = localStorage.getItem("token");
-  const response = await fetch("/api/services", {
+  const response = await fetch(`${API_BASE}/services`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -33,7 +35,7 @@ export const fetchServices = createAsyncThunk("services/fetchAll", async () => {
 export const createService = createAsyncThunk(
   "services/create",
   async (serviceData: ServiceFormData, { rejectWithValue }) => {
-    const response = await fetch("/api/services", {
+    const response = await fetch(`${API_BASE}/services`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +61,7 @@ export const createService = createAsyncThunk(
 export const updateService = createAsyncThunk(
   "services/update",
   async ({ id, data }: { id: string; data: Partial<Service> }) => {
-    const response = await fetch(`/api/services/${id}`, {
+    const response = await fetch(`${API_BASE}/services/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +81,7 @@ export const updateService = createAsyncThunk(
 export const deleteService = createAsyncThunk(
   "services/delete",
   async (id: string) => {
-    const response = await fetch(`/api/services/${id}`, {
+    const response = await fetch(`${API_BASE}/services/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

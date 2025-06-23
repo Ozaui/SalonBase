@@ -15,11 +15,13 @@ const initialState: AppointmentState = {
   error: null,
 };
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 // Async thunks
 export const fetchAppointments = createAsyncThunk(
   "appointments/fetchAll",
   async () => {
-    const response = await fetch("/api/appointments", {
+    const response = await fetch(`${API_BASE}/appointments`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -37,7 +39,7 @@ export const fetchUserAppointments = createAsyncThunk(
   "appointments/fetchUser",
   async (userId: string) => {
     const token = localStorage.getItem("token");
-    const response = await fetch(`/api/appointments/user/${userId}`, {
+    const response = await fetch(`${API_BASE}/appointments/user/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -55,7 +57,7 @@ export const createAppointment = createAsyncThunk(
   "appointments/create",
   async (appointmentData: AppointmentFormData) => {
     const token = localStorage.getItem("token");
-    const response = await fetch("/api/appointments", {
+    const response = await fetch(`${API_BASE}/appointments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +78,7 @@ export const createAppointment = createAsyncThunk(
 export const updateAppointment = createAsyncThunk(
   "appointments/update",
   async ({ id, data }: { id: string; data: Partial<Appointment> }) => {
-    const response = await fetch(`/api/appointments/${id}`, {
+    const response = await fetch(`${API_BASE}/appointments/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +98,7 @@ export const updateAppointment = createAsyncThunk(
 export const deleteAppointment = createAsyncThunk(
   "appointments/delete",
   async (id: string) => {
-    const response = await fetch(`/api/appointments/${id}`, {
+    const response = await fetch(`${API_BASE}/appointments/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

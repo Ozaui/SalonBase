@@ -13,9 +13,11 @@ const initialState: UserState = {
   error: null,
 };
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 // Async thunks
 export const fetchUsers = createAsyncThunk("users/fetchAll", async () => {
-  const response = await fetch("/api/users", {
+  const response = await fetch(`${API_BASE}/users`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
@@ -32,7 +34,7 @@ export const fetchUsers = createAsyncThunk("users/fetchAll", async () => {
 export const updateUser = createAsyncThunk(
   "users/update",
   async ({ id, data }: { id: string; data: Partial<User> }) => {
-    const response = await fetch(`/api/users/${id}`, {
+    const response = await fetch(`${API_BASE}/users/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +54,7 @@ export const updateUser = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   "users/delete",
   async (id: string) => {
-    const response = await fetch(`/api/users/${id}`, {
+    const response = await fetch(`${API_BASE}/users/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -10,6 +10,8 @@ interface AuthState {
   error: string | null;
 }
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 // Get user from localStorage
 const getStoredUser = (): User | null => {
   try {
@@ -32,7 +34,7 @@ const initialState: AuthState = {
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials: LoginCredentials) => {
-    const response = await fetch("/api/auth/login", {
+    const response = await fetch(`${API_BASE}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +55,7 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
   "auth/register",
   async (userData: RegisterData) => {
-    const response = await fetch("/api/auth/register", {
+    const response = await fetch(`${API_BASE}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +83,7 @@ export const getCurrentUser = createAsyncThunk(
       return rejectWithValue("No token available");
     }
 
-    const response = await fetch("/api/auth/me", {
+    const response = await fetch(`${API_BASE}/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
