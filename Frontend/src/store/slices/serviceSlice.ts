@@ -13,7 +13,8 @@ const initialState: ServiceState = {
   error: null,
 };
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL || "https://salon-base-93pc.vercel.app/api";
 
 // Async thunks
 export const fetchServices = createAsyncThunk("services/fetchAll", async () => {

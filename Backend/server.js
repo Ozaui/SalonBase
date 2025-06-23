@@ -75,6 +75,25 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// Temporary seed endpoint (remove after seeding)
+app.get("/api/seed", async (req, res) => {
+  try {
+    const { seedData } = require("./scripts/seed");
+    await seedData();
+    res.json({
+      success: true,
+      message: "Database seeded successfully!",
+    });
+  } catch (error) {
+    console.error("Seed error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to seed database",
+      error: error.message,
+    });
+  }
+});
+
 // API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
