@@ -2113,3 +2113,175 @@ body {
 .error-icon {
   font-size: 1.2rem;
 }
+
+/* Haftalık görünümde event kutusundaki saat bilgisini gizle */
+.rbc-event-label {
+  display: none !important;
+}
+
+/* Modern ve animasyonlu randevu butonları */
+.modern-appointment-btn {
+  min-width: 200px;
+  padding: 20px 40px;
+  border-radius: 1.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  background: none;
+  box-shadow: 0 8px 32px 0 rgba(34, 197, 94, 0.25),
+    0 1.5px 8px 0 rgba(34, 197, 94, 0.1);
+  border: 2px solid #b2f5ea;
+  margin: 0 10px;
+  transition: transform 0.18s cubic-bezier(0.4, 2, 0.6, 1),
+    box-shadow 0.18s cubic-bezier(0.4, 2, 0.6, 1),
+    background 0.18s cubic-bezier(0.4, 2, 0.6, 1);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.modern-appointment-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.modern-appointment-btn:hover:not(:disabled) {
+  transform: scale(1.07) translateY(-2px);
+  box-shadow: 0 12px 40px 0 #43e97b55, 0 2px 12px 0 #38f9d755;
+  background: linear-gradient(135deg, #38f9d7 0%, #43e97b 100%);
+}
+.modern-appointment-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.modern-appointment-btn .modern-btn-icon {
+  font-size: 2.5rem;
+  transition: transform 0.18s cubic-bezier(0.4, 2, 0.6, 1);
+}
+.modern-appointment-btn:hover .modern-btn-icon {
+  transform: scale(1.18) rotate(-8deg);
+}
+.modern-appointment-btn:active .modern-btn-icon {
+  transform: scale(0.95) rotate(8deg);
+}
+.modern-btn-green {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important;
+  border-color: #b2f5ea !important;
+  color: #fff !important;
+}
+.modern-btn-blue {
+  background: linear-gradient(135deg, #38b6ff 0%, #4f8cff 100%) !important;
+  border-color: #b2d6ff !important;
+  color: #fff !important;
+}
+.modern-btn-red {
+  background: linear-gradient(135deg, #ff5858 0%, #f857a6 100%) !important;
+  border-color: #ffb2b2 !important;
+  color: #fff !important;
+}
+.modern-btn-gray {
+  background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%) !important;
+  border-color: #e0e0e0 !important;
+  color: #333 !important;
+}
+
+.modern-appointment-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .modern-appointment-btn-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .modern-appointment-btn {
+    width: 90%;
+    min-width: 0;
+    max-width: 350px;
+  }
+}
+
+.modern-service-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 12px 0 #e0e0e0cc;
+  padding: 24px 20px;
+  margin-bottom: 32px;
+}
+.modern-input {
+  padding: 10px 16px;
+  border-radius: 0.8rem;
+  border: 1.5px solid #e0e0e0;
+  font-size: 1rem;
+  outline: none;
+  min-width: 120px;
+  transition: border 0.18s, box-shadow 0.18s;
+  background: #f8fafc;
+  box-shadow: 0 1px 4px 0 #e0e0e033;
+}
+.modern-input:focus {
+  border: 1.5px solid #38b6ff;
+  box-shadow: 0 2px 8px 0 #38b6ff33;
+}
+.modern-badge-active {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 1rem;
+  background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 1px 6px 0 #43e97b33;
+}
+.modern-badge-passive {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 1rem;
+  background: linear-gradient(90deg, #ff5858 0%, #f857a6 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 1px 6px 0 #f857a633;
+}
+.modern-service-table {
+  border-radius: 1.2rem;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 12px 0 #e0e0e0cc;
+}
+.modern-service-table th,
+.modern-service-table td {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 1rem;
+}
+.modern-service-table th {
+  background: #f3f4f6;
+  font-weight: 700;
+  color: #333;
+}
+.modern-service-table tr {
+  transition: background 0.15s;
+}
+.modern-service-table tr:hover {
+  background: #f0f9ff;
+}
+
+.modern-btn-small {
+  min-width: 60px !important;
+  padding: 8px 12px !important;
+  font-size: 1rem !important;
+  border-radius: 0.7rem !important;
+}

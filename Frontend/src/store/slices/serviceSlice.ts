@@ -32,7 +32,7 @@ export const fetchServices = createAsyncThunk("services/fetchAll", async () => {
 
 export const createService = createAsyncThunk(
   "services/create",
-  async (serviceData: ServiceFormData) => {
+  async (serviceData: ServiceFormData, { rejectWithValue }) => {
     const response = await fetch("/api/services", {
       method: "POST",
       headers: {
@@ -43,7 +43,13 @@ export const createService = createAsyncThunk(
     });
 
     if (!response.ok) {
-      throw new Error("Failed to create service");
+      let errorMsg = "Failed to create service";
+      try {
+        const data = await response.json();
+        errorMsg =
+          data.message || (data.errors && data.errors[0]?.msg) || errorMsg;
+      } catch {}
+      return rejectWithValue(errorMsg);
     }
 
     return response.json();
@@ -122,7 +128,10 @@ const serviceSlice = createSlice({
       })
       .addCase(createService.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Failed to create service";
+        state.error =
+          (action.payload as string) ||
+          action.error.message ||
+          "Failed to create service";
       })
       // Update service
       .addCase(updateService.pending, (state) => {
@@ -131,11 +140,12 @@ const serviceSlice = createSlice({
       })
       .addCase(updateService.fulfilled, (state, action) => {
         state.loading = false;
+        const updated = action.payload.data.service;
         const index = state.services.findIndex(
-          (service) => service.id === action.payload.id
+          (service) => service.id === updated.id
         );
         if (index !== -1) {
-          state.services[index] = action.payload;
+          state.services[index] = updated;
         }
       })
       .addCase(updateService.rejected, (state, action) => {
