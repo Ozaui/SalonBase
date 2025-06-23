@@ -94,7 +94,7 @@ const AdminServices = () => {
       setEditGeneralError(null);
     } catch (err: any) {
       const errors: any = {};
-      let firstField = null;
+      let firstField: string | undefined = undefined;
       let firstMsg = null;
       if (err.inner) {
         err.inner.forEach((e: any, idx: number) => {
@@ -394,12 +394,16 @@ const AdminServices = () => {
                         ) : (
                           <span
                             className={
-                              service.isActive == true
+                              service.isActive === true ||
+                              service.isActive === "true"
                                 ? "modern-badge-active"
                                 : "modern-badge-passive"
                             }
                           >
-                            {service.isActive == true ? "Aktif" : "Pasif"}
+                            {service.isActive === true ||
+                            service.isActive === "true"
+                              ? "Aktif"
+                              : "Pasif"}
                           </span>
                         )}
                       </td>

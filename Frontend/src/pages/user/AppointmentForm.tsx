@@ -9,7 +9,6 @@ import * as Yup from "yup";
 const AppointmentForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { user } = useAppSelector((state) => state.auth);
   const {
     services,
     loading: servicesLoading,
@@ -105,7 +104,7 @@ const AppointmentForm = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ isSubmitting, touched, errors, setFieldValue, values }) => (
+            {({ isSubmitting, touched, errors, setFieldValue }) => (
               <Form className="appointment-form">
                 <div className="form-group">
                   <label htmlFor="service" className="form-label">
