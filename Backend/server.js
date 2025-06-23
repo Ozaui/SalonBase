@@ -102,23 +102,20 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Database connection
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(
-      process.env.MONGODB_URI || "mongodb://localhost:27017/salonbase"
-    );
+// Database connection (Vercel uyumlu, otomatik reconnect)
+mongoose
+  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/salonbase", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    autoReconnect: true,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 500,
+  })
+  .then((conn) => {
     console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
+  })
+  .catch((error) => {
     console.error("Database connection error:", error);
-    process.exit(1);
-  }
-};
+  });
 
-// Start server
-const startServer = async () => {
-  await connectDB();
-  module.exports = app;
-};
-
-startServer();
+module.exports = app;
